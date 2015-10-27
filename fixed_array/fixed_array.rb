@@ -40,7 +40,7 @@ class FixedArray
       return out_of_bounds_exception
     end
 
-    
+
 
   end
 
@@ -66,7 +66,7 @@ end
 class MemoryObject
 
   def initialize(address, data)
-    @address = address
+    @addresses = (0..10000).to_a
     @data = data
   end
 
