@@ -25,26 +25,22 @@ class FixedArray
   # this is the "new" function
   def initialize(size)
     @size = size
-    @addresses = (0...@size).to_a
-    @elements = nil
   end
 
 
   def set(index, value)
-
-    FixedArrayElement.new(value)
-
-
-
+    value = FixedArrayElement.new(value)
+    address = 2000 + (4 * i)
+    MemoryObject.new(address, value)
   end
 
   def get(index)
 
-    if index < 0 || index >= size
+    if index < 0 || index >= @size
       return out_of_bounds_exception
     end
 
-
+    
 
   end
 
@@ -67,6 +63,11 @@ class FixedArrayElement
 
 end
 
-class MemoryAddress
+class MemoryObject
+
+  def initialize(address, data)
+    @address = address
+    @data = data
+  end
 
 end
