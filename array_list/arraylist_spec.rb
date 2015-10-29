@@ -1,15 +1,26 @@
 require_relative 'arraylist.rb'
 
+
+
 describe "ArrayList" do
 
-  context "new" do
-    it "should create a new array of the initial specified size"
+  let(:fixed_array){FixedArray.new}
+  let(:array_list){ArrayList.new}
 
-    it "should return the array"
+  context "new" do
+    it "should create a new array of the initial specified size" do
+      expect(array_list.new_array(5).count).to eq(Array.new(5).count)
+    end
+
+    it "should return the array" do
+      expect(array_list.new_array(5)).to eq(fixed_array.new_array(5))
+    end
   end
 
   context "add" do
-    it "should add the element to the end of the list"
+    it "should add the element to the end of the list" do
+      expect(array_list.add(element))
+    end
 
     it "should return the element"
   end

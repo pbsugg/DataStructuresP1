@@ -3,9 +3,9 @@ class FixedArray
   attr_reader :array
 
   # this is the "new" function
-  def initialize(size)
+  def new_array(size)
     @array = Array.new(size)
-    @array
+    self.array
   end
 
   def set(index, element)
