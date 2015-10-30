@@ -1,8 +1,6 @@
 require_relative "../fixed_array/fixed_array_simple.rb"
 
-# dynamic array
-# strategy for expansion
-
+# dynamic array, built on fixed arrays
 
 class ArrayList
 
@@ -17,10 +15,6 @@ class ArrayList
     @fixed_array_container << FixedArray.new.new_array(@size)
     @fixed_array_container.last
   end
-
-  # go through each part of the array
-  # IF you find a nil space, replace the *first* nil element and return it
-  # ELSE, add a new array and place in the first nil element
 
   def add(element)
     # below line goes through the array twice, might want to refactor
@@ -57,14 +51,15 @@ class ArrayList
   # put element in existing position, take everything and shift it down one
 
   def insert(index,element)
+
     element_on_deck = nil
 
-    # insert doesn't add another array so had to do it this way
+    # insert doesn't add another array so had to add weird break condition
     loop do
       element_on_deck ? element = element_on_deck : element
       element_on_deck = self.get(index)
-      self.set(index, element)
       break if index == master_index
+      self.set(index, element)
       index += 1
     end
 
@@ -83,8 +78,7 @@ class ArrayList
   end
 
   def add_space
-    array_size = @fixed_array_container.last.length
-    @fixed_array_container << FixedArray.new.new_array(array_size)
+    @fixed_array_container << FixedArray.new.new_array(@size)
   end
 
   def elements_in_last_array
