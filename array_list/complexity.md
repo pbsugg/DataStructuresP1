@@ -25,3 +25,7 @@ Again, worst case scenario, if I have one really huge fixed array, then I have t
 6) insert(index, element)
 
   O(N)--worst case I insert at the beginning, best case I am inserting at the end
+
+This is a really good article, come back to it:
+
+https://en.wikipedia.org/wiki/Dynamic_array

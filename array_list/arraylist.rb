@@ -1,6 +1,8 @@
 require_relative "../fixed_array/fixed_array_simple.rb"
 
 # dynamic array, built on fixed arrays
+# should have built the whole thing on an underlying fixed array, ideally
+#ask matt about this--did i cheat?
 
 class ArrayList
 
