@@ -34,20 +34,9 @@ class ArrayList
     element
   end
 
-  # Have to determine an index by adding *all* values, then compute by adding the individual units
-  # variables = (1) @size, (2) # of arrays, (3) number of elements in last array
-  #get the number of elements in array, multiply by the size of the array, add to (3)
-    # (N-1) is your total index count
-  # IF 0 > index > N
-    # Have to determine *which* array to look in
-    # array_to_look = index / size
-    #position in array =  (index % size) - 1
-    # RETURN the element
-
-
   def get(index)
     if index >= 0 && index <= master_index
-      @fixed_array_container[fixed_array_unit(index)][position_in_fixed_array(index)]
+      @fixed_array_container[fixed_array_units(index)][position_in_fixed_array(index)]
     else
       "index out of range"
     end
@@ -55,7 +44,7 @@ class ArrayList
 
   def set(index, element)
     if index >= 0 && index <= master_index
-      @fixed_array_container[fixed_array_unit(index)][position_in_fixed_array(index)] = element
+      @fixed_array_container[fixed_array_units(index)][position_in_fixed_array(index)] = element
     else
       "index out of range"
     end
@@ -68,6 +57,23 @@ class ArrayList
   # put element in existing position, take everything and shift it down one
 
   def insert(index,element)
+    element_on_deck = nil
+
+    # insert doesn't add another array so had to do it this way
+    loop do
+      element_on_deck ? element = element_on_deck : element
+      element_on_deck = self.get(index)
+      self.set(index, element)
+      break if index == master_index
+      index += 1
+    end
+
+    self.add(element_on_deck)
+
+  end
+
+  def master_index
+    (@size * fixed_array_count) + elements_in_last_array - 1
   end
 
   private
@@ -89,11 +95,7 @@ class ArrayList
     @fixed_array_container.count - 1
   end
 
-  def master_index
-    (@size * fixed_array_count) + elements_in_last_array - 1
-  end
-
-  def fixed_array_unit(index)
+  def fixed_array_units(index)
     index / @size
   end
 

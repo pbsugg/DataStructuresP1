@@ -105,7 +105,27 @@ describe "ArrayList" do
   end
 
   context "insert(index, element)" do
-    it "should insert the desired element at the specified index"
+
+    before(:each) do
+      array_list.new_array(5)
+      alphabet = (1..20).to_a
+      alphabet.each{|i| array_list.add(i)}
+      array_list.insert(5, "test")
+    end
+
+    it "should insert the desired element at the specified index" do
+      expect(array_list.get(5)).to eq("test")
+    end
+
+    it 'should move all the other elements down one' do
+      expect(array_list.get(6)).to eq(6)
+
+    end
+
+    it 'should add more fixed arrays if necessary' do
+      expect(array_list.fixed_array_container.last).to eq([20,nil,nil,nil,nil])
+    end
+
   end
 
 
