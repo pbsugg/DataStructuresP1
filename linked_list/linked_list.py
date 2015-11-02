@@ -55,14 +55,31 @@ class LinkedList:
 
         # get item at index place in list
         # there's no natural index, have to come up with a counter
-    def get(index):
-        
+    def get(self, index):
+        counter = 0
+        current_node = self.head
+        while counter != index:
+            current_node = current_node.next_element
+            counter += 1
+        return current_node
     #
     #     # Set element in list at index
-    # def set(index, element):
-    #
-    #     return size
-    # def size(self):
+    def set(self, index, element):
+        counter = 0
+        current_node = self.head
+        while counter != index:
+            current_node = current_node.next_element
+            counter += 1
+        current_node.value = element
+        return current_node
+
+    def size(self):
+        counter = 1
+        current_node = self.head
+        while current_node.next_element != None:
+            current_node = current_node.next_element
+            counter += 1
+        return counter
 
     def __create_node(self, element):
         item = Node()

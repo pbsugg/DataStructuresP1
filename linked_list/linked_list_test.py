@@ -53,6 +53,23 @@ class TestLinkedList(unittest.TestCase):
         self.list.remove_last()
         self.assertEqual(self.list.head.next_element, None)
 
+    def test_set(self):
+        self.list.insert_first("Two")
+        self.list.insert_first("One")
+        self.list.set(0, "Reset")
+        self.assertEqual(self.list.head.value, "Reset")
+        self.list.set(1, "Reset")
+        self.assertEqual(self.list.head.next_element.value, "Reset")
+
+    def test_size(self):
+        self.list.insert_first("Three")
+        self.list.insert_first("Two")
+        self.list.insert_first("One")
+        self.assertEqual(self.list.size(), 3)
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main(verbosity = 2)
