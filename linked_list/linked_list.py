@@ -25,8 +25,7 @@ class LinkedList:
     # assign value to element
     # point to first element in list
     def insert_first(self, element):
-        item = Node()
-        item.new(element)
+        item = self.__create_node(element)
         item.insert(self.head)
         self.head = item
 
@@ -39,16 +38,25 @@ class LinkedList:
             self.head = self.head.next_element   #change head to next_element
             old_head.remove_after()  # remove pointer from current head to new head
 
+    # insert at end of the list
+    def insert_last(self, element):
+        # create node
+        item_to_insert = self.__create_node(element)
+        current_end_node = self.__traverse_to_node_end(self.head)
+        current_end_node.next_element = item_to_insert
 
-    #
-    #     # insert at end of the list
-    # def insert_last(element):
-    #
-    #     # remove at back, None if empty
-    # def remove_last(element):
-    #
+        # remove at back, None if empty
+    def remove_last(self):
+        current_node = self.head
+        while (current_node.next_element != None):
+            prev_node = current_node
+            current_node = current_node.next_element
+        prev_node.next_element = None
+
         # get item at index place in list
-    # def get(index):
+        # there's no natural index, have to come up with a counter
+    def get(index):
+        
     #
     #     # Set element in list at index
     # def set(index, element):
@@ -56,7 +64,15 @@ class LinkedList:
     #     return size
     # def size(self):
 
+    def __create_node(self, element):
+        item = Node()
+        item.new(element)
+        return item
 
+    def __traverse_to_node_end(self, current_node):
+        while (current_node.next_element != None):
+            current_node = current_node.next_element
+        return current_node
 
 
 # __private = private method
