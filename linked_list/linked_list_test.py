@@ -21,6 +21,7 @@ class TestNode(unittest.TestCase):
         self.a.remove_after()
         self.assertEqual(self.a.next_element, None)
 
+
 class TestLinkedList(unittest.TestCase):
 
     def setUp(self):
@@ -40,6 +41,34 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(self.list.head.value, "Two")
         self.list.remove_first()
         self.assertEqual(self.list.head.value, "Three")
+
+    def test_insert_last(self):
+        self.list.insert_first("One")
+        self.list.insert_last("Two")
+        self.assertEqual(self.list.head.next_element.value, "Two")
+
+    def test_remove_last(self):
+        self.list.insert_first("Two")
+        self.list.insert_first("One")
+        self.list.remove_last()
+        self.assertEqual(self.list.head.next_element, None)
+
+    def test_set(self):
+        self.list.insert_first("Two")
+        self.list.insert_first("One")
+        self.list.set(0, "Reset")
+        self.assertEqual(self.list.head.value, "Reset")
+        self.list.set(1, "Reset")
+        self.assertEqual(self.list.head.next_element.value, "Reset")
+
+    def test_size(self):
+        self.list.insert_first("Three")
+        self.list.insert_first("Two")
+        self.list.insert_first("One")
+        self.assertEqual(self.list.size(), 3)
+
+
+
 
 
 if __name__ == '__main__':
