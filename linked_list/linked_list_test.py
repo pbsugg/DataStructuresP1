@@ -21,6 +21,26 @@ class TestNode(unittest.TestCase):
         self.a.remove_after()
         self.assertEqual(self.a.next_element, None)
 
+class TestLinkedList(unittest.TestCase):
+
+    def setUp(self):
+        self.list = LinkedList()
+        self.list.new()
+
+        # code smell: chaining all these methods together here
+    def test_insert_first(self):
+        self.list.insert_first("Test")
+        self.assertEqual(self.list.head.value, "Test")
+
+    def test_remove_first(self):
+        self.list.insert_first("Three")
+        self.list.insert_first("Two")
+        self.list.insert_first("One")
+        self.list.remove_first()
+        self.assertEqual(self.list.head.value, "Two")
+        self.list.remove_first()
+        self.assertEqual(self.list.head.value, "Three")
+
 
 if __name__ == '__main__':
     unittest.main(verbosity = 2)
