@@ -36,7 +36,7 @@ class LinkedList:
         else:
             old_head = self.head  #assign current head to variable
             self.head = self.head.next_element   #change head to next_element
-            old_head.remove_after()  # remove pointer from current head to new head
+            old_head.remove_after()  # move pointer from current head to new head
 
     # insert at end of the list
     def insert_last(self, element):

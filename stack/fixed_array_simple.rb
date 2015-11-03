@@ -24,7 +24,7 @@ class FixedArray
   private
 
   def out_of_bounds_exception
-    "Desired index out of bounds"
+    p "Desired index out of bounds"
   end
 
 
