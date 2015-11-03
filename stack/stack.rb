@@ -15,12 +15,12 @@ def new
 end
 
 def push(element)
-  @stack[0] = element
+  @stack.set(0, element)
 end
 
 def pop
-  element = @stack[0]
-  @stack[0] = nil
+  element = @stack.get(0)
+  @stack.set(0, nil)
   element
 end
 
@@ -29,7 +29,7 @@ def top
 end
 
 def empty?
-  @stack[0] == nil
+  @stack.get(0) == nil
 end
 
 end

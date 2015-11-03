@@ -17,8 +17,8 @@ class FixedArray
 
     if index < 0 || index >= @size
       return out_of_bounds_exception
-    end
-
+    else
+      item = @array[index]
   end
 
   private
