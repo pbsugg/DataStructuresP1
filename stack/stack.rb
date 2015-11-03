@@ -8,10 +8,18 @@ require_relative 'fixed_array_simple.rb'
 
 class Stack
 
+
+
+# give me the whole stack
+def get_stack
+  @stack.array
+end
+
 # create a new stack of a default_size 10
-def new
-  @stack = FixedArray.new_array(10)
-  @size = 10
+def new_stack
+  @stack = FixedArray.new
+  @stack.new_array(10)
+  @stack.array
 end
 
 def push(element)
@@ -25,13 +33,12 @@ def pop
 end
 
 def top
-  @stack[0]
+  stack = get_stack
+  stack.first
 end
 
 def empty?
   @stack.get(0) == nil
-end
-
 end
 
 end
