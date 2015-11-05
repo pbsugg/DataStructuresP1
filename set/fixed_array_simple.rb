@@ -1,18 +1,22 @@
 class FixedArray
 
-  attr_reader :array
+  attr_reader :container
+  attr_accessor :space
 
-
-
-  # this is the "new" function
-  def new_array(size)
+  def initialize(size)
     @size = size
-    @array = Array.new(size)
-    self.array
+    @space = size
+    @container = Array.new(size)
+    self.container
   end
 
   def set(index, element)
-    @array[index] = element
+    if index < 0 || index >= @size
+      return out_of_bounds_exception
+    else
+      @container[index] = element
+      @space -= 1
+    end
   end
 
   def get(index)
