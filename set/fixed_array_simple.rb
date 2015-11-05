@@ -1,6 +1,6 @@
 class FixedArray
 
-  attr_reader :container
+  attr_reader :container, :size
   attr_accessor :space
 
   def initialize(size)

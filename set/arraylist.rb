@@ -1,4 +1,4 @@
-require_relative "../fixed_array/fixed_array_simple.rb"
+require_relative "fixed_array_simple.rb"
 
 # dynamic array, built on fixed arrays
 # should have built the whole thing on an underlying fixed array, ideally
@@ -6,7 +6,7 @@ require_relative "../fixed_array/fixed_array_simple.rb"
 
 class ArrayList
 
-  attr_reader :fixed_array_container, :size
+  attr_reader :container, :size
 
   # function to create new
   def initialize(size)
