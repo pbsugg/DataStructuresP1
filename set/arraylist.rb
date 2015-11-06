@@ -16,11 +16,11 @@ class ArrayList
     @container
   end
 
+  # needed to use "times" do avoid over-reaching into the array
   def add(element)
-    # below line goes through the array twice, might want to refactor
-    add_space if @space = 0
-    @container.each_with_index do |item, index|
-      if item == nil
+    add_space if @space == 0
+    @size.times do |index|
+      if @container.get(index) == nil
         @container.set(index, element)
         @space -= 1
         break
@@ -31,7 +31,7 @@ class ArrayList
 
   def get(index)
     if index >= 0 && index < @size
-      @container.get
+      @container.get(index)
     else
       "index out of range"
     end
@@ -52,7 +52,8 @@ class ArrayList
       element_on_deck = @container.get(index)
       @container.set(index, element)
       index += 1
-      break if index == master_index || element_on_deck == nil
+      add_space if index == @size - 1
+      break if element_on_deck == nil
     end
 
   end
@@ -63,8 +64,12 @@ class ArrayList
   # need to preserve indexes, so have to start at beginning
   def add_space
     @size *= 2
+    @space = (@size / 2)
     holding_container = FixedArray.new(@size)
-    @container.each_with_index do |item, index|
+    # since you've just doubled the array size, space reflects how many elements in array
+    @space.times do |index|
+      item = @container.get(index)
+      break if item == nil
       holding_container.set(index, item)
     end
     @container = holding_container
