@@ -18,12 +18,36 @@ describe 'Set' do
   end
 
   context 'add' do
-    # it 'can accept new elements' do
-    #   expect(test_set.add)
-    # end
+
+    it 'can accept new elements' do
+      test_set.add(5)
+      expect(test_set.contains?(5)).to be(true)
+    end
 
     it 'does not duplicate elements' do
+      20.times{|x| test_set.add("x")}
+      expect(test_set.size).to eq(5)
+    end
 
+  end
+
+  context 'contains' do
+
+    it 'can tell whether an element is contained in the set' do
+      test_set.add("hello")
+      expect(test_set.contains?("hello")).to be(true)
+      expect(test_set.contains?("not here")).to be(false)
+    end
+
+  end
+
+  context 'remove' do
+
+    it 'removes the element' do
+      test_set.add(5)
+      expect(test_set.contains?(5)).to be(true)
+      test_set.remove(5)
+      expect(test_set.contains?(5)).to be(false)
     end
 
   end

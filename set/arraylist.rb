@@ -1,8 +1,5 @@
 require_relative "fixed_array_simple.rb"
 
-# dynamic array, built on fixed arrays
-# should have built the whole thing on an underlying fixed array, ideally
-#ask matt about this--did i cheat?
 
 class ArrayList
 
@@ -61,7 +58,7 @@ class ArrayList
   private
 
   # create a new array (double in size) and copy old stuff over
-  # need to preserve indexes, so have to start at beginning
+  # need to preserve indexes, so have to copy old stuff in at beginning
   def add_space
     @size *= 2
     @space = (@size / 2)
