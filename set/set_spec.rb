@@ -53,5 +53,32 @@ describe 'Set' do
   end
 
 
+  context 'iterate' do
+    before (:each) do
+      5.times{|x| test_set.add(x)}
+    end
+
+    it 'should iterate properly with a lambda block passed in' do
+      block = lambda{|x| x * 2}
+      test_set.iterate(block)
+      expect(test_set.contains?(8)).to be (true)
+    end
+
+    it 'works with a proc too' do
+      func = Proc.new{|x| x * 2}
+      test_set.iterate(func)
+      expect(test_set.contains?(8)).to be (true)
+    end
+
+
+    context 'size' do
+      it 'should return the proper size' do
+        20.times{|x| test_set.add(x)}
+        expect(test_set.size).to be(20)
+      end
+    end
+
+  end
+
 
 end
