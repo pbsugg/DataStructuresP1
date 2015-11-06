@@ -1,12 +1,11 @@
 class FixedArray
 
-  attr_reader :container, :size
-  attr_accessor :space
+  attr_accessor :space, :container, :size
 
   def initialize(size)
     @size = size
     @space = size
-    @container = Array.new(size)
+    @container = Array.new(@size)
     self.container
   end
 
@@ -23,7 +22,7 @@ class FixedArray
     if index < 0 || index >= @size
       return out_of_bounds_exception
     else
-      item = @array[index]
+      item = @container[index]
     end
   end
 
