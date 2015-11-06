@@ -7,12 +7,14 @@ require_relative 'arraylist.rb'
 
 class Set
 
-  attr_reader :container, :underlying_struct
+  attr_reader :container
 
   def initialize
-    @underlying_struct = ArrayList.new
-    @underlying_struct.new_array(10)
-    @container = @underlying_struct.fixed_array_container
+    @container = ArrayList.new(10)
+  end
+
+  def
+
   end
 
 
