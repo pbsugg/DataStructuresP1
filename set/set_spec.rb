@@ -91,6 +91,30 @@ describe 'Set' do
     end
 
     context 'union' do
+      let(:test_set_2){Set.new}
+
+      before(:each) do
+        20.times{|x| test_set.add(x)}
+      end
+
+      it 'should return just the original set if the other_set is empty'
+
+      it 'should not duplicate any entries'
+
+      it 'should be able to deal with a set when only some are in common' do
+        (15..25).to_a.each{|x| test_set_2.add(x)}
+        result = test_set.union(test_set_2)
+        expect(result.size).to eq(26)
+        expect(result.contains?(25)).to eq(true)
+        expect(result.contains?(20)).to eq(true)
+        expect(result.contains?(10)).to eq(true)
+      end
+
+    end
+
+
+
+    context 'intersection' do
 
       let(:test_set_2){Set.new}
 
@@ -98,21 +122,21 @@ describe 'Set' do
         20.times{|x| test_set.add(x)}
       end
 
-      it 'returns the union of this another another set' do
+      it 'returns the intersection of this another another set' do
         10.times{|x| test_set_2.add(x)}
-        result = test_set.union(test_set_2)
+        result = test_set.intersection(test_set_2)
         expect(result.contains?(9)).to eq(true)
         expect(result.contains?(5)).to eq(true)
         expect(result.contains?(0)).to eq(true)
       end
 
-      it 'returns the union when they have diverse elements' do
+      it 'returns the intersection when they have diverse elements' do
         test_set.add("a")
         test_set_2.add(1)
         test_set_2.add("a")
         test_set_2.add(4)
         test_set_2.add(44)
-        result = test_set.union(test_set_2)
+        result = test_set.intersection(test_set_2)
         expect(result.contains?("a")).to eq(true)
         expect(result.contains?(4)).to eq(true)
         expect(result.contains?(44)).to eq(false)
@@ -120,13 +144,12 @@ describe 'Set' do
 
       it 'returns empty set when the two sets have nothing in common' do
         (30..40).to_a.each{|x| test_set_2.add(x)}
-        result = test_set.union(test_set_2)
-        p result
+        result = test_set.intersection(test_set_2)
         expect(result.size).to eq(0)
       end
 
       it 'can handle a null set by returning a null set' do
-        result = test_set.union(test_set_2)
+        result = test_set.intersection(test_set_2)
         expect(result.size).to eq(0)
       end
 

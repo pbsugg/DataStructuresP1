@@ -7,7 +7,7 @@ require_relative '../array_list/arraylist.rb'
 
 class Set
 
-  attr_reader :container, :size
+  attr_reader :container
 
   def initialize
     @container = ArrayList.new(5)
@@ -43,7 +43,7 @@ class Set
     return_set = Set.new
     size.times do |index|
       element = @container.get(index)
-      # protect against unordered nils
+      # protect against randomly interspersed nils
       next unless element
       result = block.call(element)
       return_set.add(result)
@@ -51,22 +51,25 @@ class Set
     return_set
   end
 
-  # return a new set that is union (all elements, no repeats) of this and another set
-  # Input: other_set(set object)
-  # output: return_set that is the union of the two
-  # take *each* number, check against *every number in the other set
+
+  # everything from *either* set
+  # create a new set, put everything from first_set in the there
+  # for second set, put everything from there in as well
+  # not sure if this is the right way to use the block here
   def union(other_set)
-    return_set = Set.new
-    if other_set.size == 0
-      return return_set
-    else
-      union_test = lambda {|x| x if other_set.contains?(x)}
-      iterate(union_test)
-    end
+    return self if other_set.size == 0
+    result_set = Set.new
+    union_test = Proc.new {|x| result_set.add(x)}
+    self.iterate(union_test)
+    other_set.iterate(union_test)
+    result_set
   end
 
   # return new set of members of both sets
   def intersection(other_set)
+    return other_set if other_set.size == 0
+    intersection_test = lambda {|x| x if other_set.contains?(x)}
+    iterate(intersection_test)
   end
 
   private
@@ -81,12 +84,6 @@ class Set
     end
     location
   end
-
-  # find the element in the array
-  #
-  # def remove(element)
-  #   @container.
-  # end
 
 
 

@@ -6,7 +6,6 @@ class FixedArray
     @size = size
     @space = size
     @container = Array.new(@size)
-    self.container
   end
 
   def set(index, element)
@@ -33,7 +32,5 @@ class FixedArray
   def out_of_bounds_exception
     "Desired index out of bounds"
   end
-
-
 
 end
