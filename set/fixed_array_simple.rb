@@ -14,7 +14,7 @@ class FixedArray
       return out_of_bounds_exception
     else
       @container[index] = element
-      @space -= 1
+      @space -= 1 if @container[index] == nil
     end
   end
 

@@ -55,30 +55,61 @@ describe 'Set' do
 
   context 'iterate' do
     before (:each) do
-      5.times{|x| test_set.add(x)}
+      20.times{|x| test_set.add(x)}
+    end
+
+    it 'should return a new set' do
+      block = lambda{|x| x * 2}
+      expect(test_set.iterate(block)).to be_kind_of(Set)
     end
 
     it 'should iterate properly with a lambda block passed in' do
       block = lambda{|x| x * 2}
-      test_set.iterate(block)
-      expect(test_set.contains?(8)).to be (true)
+      result = test_set.iterate(block)
+      expect(result.contains?(16)).to be(true)
     end
 
     it 'works with a proc too' do
       func = Proc.new{|x| x * 2}
-      test_set.iterate(func)
-      expect(test_set.contains?(8)).to be (true)
+      result = test_set.iterate(func)
+      expect(result.contains?(16)).to be(true)
     end
 
+  end
 
     context 'size' do
       it 'should return the proper size' do
         20.times{|x| test_set.add(x)}
         expect(test_set.size).to be(20)
       end
+
+      it 'should reflect the number of elements *not* the underlying data structure' do
+
+      end
+
     end
 
-  end
+    context 'union' do
 
+      let(:test_set_2){Set.new}
+
+      before(:each) do
+        20.times{|x| test_set.add(x)}
+      end
+
+      it 'returns the union of this another another set' do
+        10.times{|x| test_set_2.add(x)}
+        result = test_set.union(test_set_2)
+        expect(result.contains?(9)).to eq(true)
+        expect(result.contains?(5)).to eq(true)
+        expect(result.contains?(0)).to eq(true)
+      end
+
+      it 'can handle a null set' do
+        result = test_set.union(test_set_2)
+        expect(result.size).to eq(0)
+      end
+
+    end
 
 end

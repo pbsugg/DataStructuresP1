@@ -39,22 +39,42 @@ class Set
 
   # block = some block of code
   # go through every element, calls whatever block was passed
-  # not sure if this will work only with lambdas, or with Procs too...
+  # not destructive, returns a new set
   def iterate(block)
+    return_set = Set.new
     size.times do |index|
       element = @container.get(index)
       # protect against unordered nils
       next unless element
       result = block.call(element)
-      @container.set(index, result)
+      return_set.add(result)
     end
+    return_set
+  end
+
+  # return a new set that is union (all elements, no repeats) of this and another set
+  # Input: other_set(set object)
+  # output: return_set that is the union of the two
+  # take *each* number, check against *every number in the other set
+  def union(other_set)
+    return_set = Set.new
+    if other_set.size == 0
+      return return_set
+    else
+      union_test = lambda {|x| x if other_set.contains?(x)}
+      iterate(union_test)
+    end
+  end
+
+  # return new set of members of both sets
+  def intersection(other_set)
   end
 
   private
 
   def locate(element)
     location = nil
-    @size.times do |index|
+    size.times do |index|
       if @container.get(index) == element
         location = index
         break
