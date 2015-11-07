@@ -26,7 +26,7 @@ describe 'Set' do
 
     it 'does not duplicate elements' do
       20.times{|x| test_set.add("x")}
-      expect(test_set.size).to eq(5)
+      expect(test_set.size).to eq(1)
     end
 
   end
@@ -83,8 +83,9 @@ describe 'Set' do
         expect(test_set.size).to be(20)
       end
 
-      it 'should reflect the number of elements *not* the underlying data structure' do
-
+      it 'should reflect the number of actual elements *not* the space in the underlying data structure' do
+        7.times{|x| test_set.add(x)}
+        expect(test_set.size).to be(7)
       end
 
     end
@@ -105,7 +106,26 @@ describe 'Set' do
         expect(result.contains?(0)).to eq(true)
       end
 
-      it 'can handle a null set' do
+      it 'returns the union when they have diverse elements' do
+        test_set.add("a")
+        test_set_2.add(1)
+        test_set_2.add("a")
+        test_set_2.add(4)
+        test_set_2.add(44)
+        result = test_set.union(test_set_2)
+        expect(result.contains?("a")).to eq(true)
+        expect(result.contains?(4)).to eq(true)
+        expect(result.contains?(44)).to eq(false)
+      end
+
+      it 'returns empty set when the two sets have nothing in common' do
+        (30..40).to_a.each{|x| test_set_2.add(x)}
+        result = test_set.union(test_set_2)
+        p result
+        expect(result.size).to eq(0)
+      end
+
+      it 'can handle a null set by returning a null set' do
         result = test_set.union(test_set_2)
         expect(result.size).to eq(0)
       end

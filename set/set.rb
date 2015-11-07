@@ -1,4 +1,4 @@
-require_relative 'arraylist.rb'
+require_relative '../array_list/arraylist.rb'
 
 # key features:
 
@@ -11,7 +11,6 @@ class Set
 
   def initialize
     @container = ArrayList.new(5)
-    @size = @container.size
   end
 
   def add(element)
@@ -34,7 +33,7 @@ class Set
   end
 
   def size
-    @container.size
+    @container.size - @container.space
   end
 
   # block = some block of code
