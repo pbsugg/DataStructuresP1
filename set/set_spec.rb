@@ -97,11 +97,22 @@ describe 'Set' do
         20.times{|x| test_set.add(x)}
       end
 
-      it 'should return just the original set if the other_set is empty'
+      it 'should return just the original set if the other_set is empty' do
+        result = test_set.union(test_set_2)
+        expect(result.size).to eq(20)
+      end
 
-      it 'should not duplicate any entries'
+      it 'should not duplicate any entries' do
+        (10..20).to_a.each{|x| test_set_2.add(x)}
+        result = test_set.union(test_set_2)
+        # put everything in the test_container to test against my results
+        test_container = []
+        get_all_entries = lambda {|x| test_container << x}
+        all_entries = result.iterate(get_all_entries)
+        expect(result.size).to eq(test_container.uniq.length)
+      end
 
-      it 'should be able to deal with a set when only some are in common' do
+      it 'should be able to deal with a set when only some elements are in common' do
         (15..25).to_a.each{|x| test_set_2.add(x)}
         result = test_set.union(test_set_2)
         expect(result.size).to eq(26)
@@ -151,6 +162,70 @@ describe 'Set' do
       it 'can handle a null set by returning a null set' do
         result = test_set.intersection(test_set_2)
         expect(result.size).to eq(0)
+      end
+
+    end
+
+
+    context 'difference' do
+
+      let(:test_set_2){Set.new}
+
+      before(:each) do
+        20.times{|x| test_set.add(x)}
+      end
+
+      it 'should return the number of entries in the original that are not in the comparison set' do
+        (15..25).to_a.each{ |x| test_set_2.add(x) }
+        result = test_set.difference(test_set_2)
+        expect(result.size).to eq(15)
+      end
+
+      it 'should return the entire original set if it is empty' do
+        result = test_set.difference(test_set_2)
+        expect(result.container).to eq(test_set.container)
+      end
+
+      it 'should return the difference in a mixed set' do
+        ("a".."l").to_a.each{|x| test_set.add(x)}
+        (15..25).to_a.each{ |x| test_set_2.add(x) }
+        ("f".."v").to_a.each{|x| test_set_2.add(x)}
+        result = test_set.difference(test_set_2)
+        expect(result.contains?("h")).to be(false)
+        expect(result.contains?(10)).to be(true)
+        expect(result.contains?("v")).to be(false)
+        expect(result.contains?(5)).to be(true)
+      end
+
+    end
+
+    context 'subset' do
+      let(:test_set_2){Set.new}
+
+      before(:each) do
+        20.times{|x| test_set.add(x)}
+      end
+
+      it 'should return true if other_set is empty' do
+        expect(test_set.subset(test_set_2)).to be(true)
+
+      end
+
+      it 'should return true for a non-zero subset set' do
+        (8..9).to_a.each{|x| test_set_2.add(x)}
+        expect(test_set.subset(test_set_2)).to be(true)
+      end
+
+      it 'should return false when elements are not in common' do
+        (8..22).to_a.each{|x| test_set_2.add(x)}
+        expect(test_set.subset(test_set_2)).to be(false)
+      end
+
+      it 'should be able to handle mixed value types' do
+        ("a".."l").to_a.each{|x| test_set.add(x)}
+        (15..19).to_a.each{ |x| test_set_2.add(x) }
+        ("c".."g").to_a.each{|x| test_set_2.add(x)}
+        expect(test_set.subset(test_set_2)).to be(true)
       end
 
     end

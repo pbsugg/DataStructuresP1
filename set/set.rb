@@ -36,6 +36,10 @@ class Set
     @container.size - @container.space
   end
 
+  def real_size_including_free_space
+    @container.size
+  end
+
   # block = some block of code
   # go through every element, calls whatever block was passed
   # not destructive, returns a new set
@@ -72,11 +76,28 @@ class Set
     iterate(intersection_test)
   end
 
+  # return elements in self that are not in other set
+  def difference(other_set)
+    return self if other_set.size == 0
+    difference_test = lambda {|x| x unless other_set.contains?(x)}
+    iterate(difference_test)
+  end
+
+  # test if other_set is a subset of self
+  def subset(other_set)
+    candidate = other_set
+    subset_block = lambda{|x| candidate.remove(x) if candidate.contains?(x)}
+    iterate(subset_block)
+    return true if candidate.size == 0
+    false
+  end
+
+
   private
 
   def locate(element)
     location = nil
-    size.times do |index|
+    real_size_including_free_space.times do |index|
       if @container.get(index) == element
         location = index
         break
@@ -84,9 +105,6 @@ class Set
     end
     location
   end
-
-
-
 
 
 end
