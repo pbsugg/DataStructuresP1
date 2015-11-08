@@ -60,18 +60,18 @@ describe 'Set' do
 
     it 'should return a new set' do
       block = lambda{|x| x * 2}
-      expect(test_set.iterate(block)).to be_kind_of(Set)
+      expect(test_set.iterate(&block)).to be_kind_of(Set)
     end
 
     it 'should iterate properly with a lambda block passed in' do
       block = lambda{|x| x * 2}
-      result = test_set.iterate(block)
+      result = test_set.iterate(&block)
       expect(result.contains?(16)).to be(true)
     end
 
     it 'works with a proc too' do
       func = Proc.new{|x| x * 2}
-      result = test_set.iterate(func)
+      result = test_set.iterate(&func)
       expect(result.contains?(16)).to be(true)
     end
 
@@ -108,7 +108,7 @@ describe 'Set' do
         # put everything in the test_container to test against my results
         test_container = []
         get_all_entries = lambda {|x| test_container << x}
-        all_entries = result.iterate(get_all_entries)
+        all_entries = result.iterate(&get_all_entries)
         expect(result.size).to eq(test_container.uniq.length)
       end
 
