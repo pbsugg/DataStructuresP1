@@ -31,11 +31,7 @@ class ArrayList
   end
 
   def get(index)
-    if index >= 0 && index < size
       @container.get(index)
-    else
-      "index out of range"
-    end
   end
 
   def set(index, element)
