@@ -1,4 +1,4 @@
-require_relative 'arraylist.rb'
+require_relative 'array_list.rb'
 
 
 
@@ -99,16 +99,15 @@ describe "ArrayList" do
     before(:each) do
       list = (1..20).to_a
       list.each{|i| array_list.add(i)}
-      array_list.insert(5, "test")
+      array_list.insert(0, "test")
     end
 
     it "should insert the desired element at the specified index" do
-      expect(array_list.get(5)).to eq("test")
+      expect(array_list.get(0)).to eq("test")
     end
 
     it 'should move all the other elements down one' do
-      expect(array_list.get(6)).to eq(6)
-
+      expect(array_list.get(20)).to eq(20)
     end
 
     it 'should add more fixed arrays if necessary' do

@@ -2,41 +2,72 @@ require_relative 'stack.rb'
 
 describe 'Stack' do
 
-  let(:test_sample){Stack.new}
+  let(:stack){StackDynamicArray.new(10)}
 
-    before(:each) do
-      test_sample.new_stack
+
+    context 'push and pop' do
+
+      before (:each) do
+        stack.push(5)
+        stack.push(4)
+        stack.push(3)
+        stack.push(2)
+        stack.push(1)
+      end
+
+      it "should add a new item at the beginning" do
+        expect(stack.pop).to eq(1)
+      end
+
+      it 'should continue finding the element on top with successive pops' do
+        expect(stack.pop).to eq(1)
+        expect(stack.pop).to eq(2)
+        expect(stack.pop).to eq(3)
+      end
+
+      it 'should return nil if there are no elements in the stack' do
+        5.times{ stack.pop}
+        expect(stack.pop).to eq(nil)
+      end
+
+      it 'should be able to add a new element to the stack' do
+        stack.push(6)
+        expect(stack.pop).to eq(6)
+      end
+
     end
 
-    it 'should create a new stack that is 10 elements long' do
-      expect(test_sample.get_stack.length).to eq(10)
+    context 'top' do
+
+      it "should tell you what is on top" do
+        stack.push(5)
+        expect(stack.top).to eq(5)
+      end
+
+      it "should not remove the element with the 'top' command" do
+        stack.push(5)
+        stack.top
+        expect(stack.top).to eq(5)
+      end
+
     end
 
-    it "should add a new item at the beginning of the underlying array" do
-      test_sample.push(5)
-      expect(test_sample.top).to eq(5)
-    end
+    context 'empty' do
 
-    it "should take the element off the pile when you pop it" do
-      test_sample.push(10)
-      test_sample.pop
-      expect(test_sample.get_stack[0]).to eq(nil)
-    end
+      before (:each) do
+        stack.push(5)
+        stack.push(4)
+        stack.push(3)
+        stack.push(2)
+        stack.push(1)
+      end
 
-    it "should tell you what is on top" do
-      test_sample.push(5)
-      expect(test_sample.top).to eq(5)
-    end
+      it 'should report correctly' do
+        expect(stack.empty?).to be(false)
+        5.times{ stack.pop}
+        expect(stack.empty?).to be(true)
+      end
 
-    it "should not remove the element with the 'top' command" do
-      test_sample.push(5)
-      test_sample.top
-      expect(test_sample.top).to eq(5)
     end
-
-    it "should tell you if the stack is empty" do
-      expect(test_sample.empty?).to be(true)
-    end
-
 
 end

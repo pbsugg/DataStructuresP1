@@ -1,4 +1,4 @@
-require_relative '../array_list/arraylist.rb'
+require_relative '../array_list/array_list.rb'
 
 # key features:
 
