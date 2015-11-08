@@ -39,16 +39,18 @@ class ArrayList
   end
 
   # put element in existing position, take everything and shift it down one
-
+  # not dry enough, work on this
   def insert(index,element)
     new_size = size + 1
-    element_on_deck = nil
-    while index < new_size
-      element_on_deck ? element = element_on_deck : element
-      element_on_deck = @container.get(index)
-      @container.set(index, element)
+    add_space if new_size > size
+    element_on_deck = get(index)
+    set(index, element)
+    index += 1
+    while index < size
+      element = element_on_deck
+      element_on_deck = get(index)
+      set(index, element)
       index += 1
-      add_space if index == (size - 1)
     end
   end
 
