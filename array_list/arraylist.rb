@@ -1,53 +1,45 @@
-require_relative "../fixed_array/fixed_array_simple.rb"
+require_relative "../fixed_array/fixed_array.rb"
 
-# dynamic array, built on fixed arrays
-# should have built the whole thing on an underlying fixed array, ideally
-#ask matt about this--did i cheat?
 
 class ArrayList
 
-  attr_reader :fixed_array_container
+  attr_reader :container
 
-  def initialize
-    @fixed_array_container = []
+  # function to create new
+  def initialize(size)
+    @container = FixedArray.new(size)
   end
 
-  def new_array(size)
-    @size = size
-    @fixed_array_container << FixedArray.new.new_array(@size)
-    @fixed_array_container.last
+  def size
+    @container.size
   end
 
+  def space
+    @container.space
+  end
+
+  # needed to use "times" do avoid over-reaching into the array
   def add(element)
-    # below line goes through the array twice, might want to refactor
-    add_space unless nil_space?
-    @fixed_array_container.last.each_with_index do |item, index|
-          if item == nil
-            @fixed_array_container.last[index] = element
-            break
-          end
+    add_space if space == 0
+    size.times do |index|
+      if @container.get(index) == nil
+        @container.set(index, element)
+        break
+      end
     end
     element
   end
 
   def get(index)
-    if index >= 0 && index <= master_index
-      @fixed_array_container[fixed_array_units(index)][position_in_fixed_array(index)]
+    if index >= 0 && index < size
+      @container.get(index)
     else
       "index out of range"
     end
   end
 
   def set(index, element)
-    if index >= 0 && index <= master_index
-      @fixed_array_container[fixed_array_units(index)][position_in_fixed_array(index)] = element
-    else
-      "index out of range"
-    end
-  end
-
-  def size
-    master_index + 1
+      @container.set(index, element)
   end
 
   # put element in existing position, take everything and shift it down one
@@ -55,48 +47,31 @@ class ArrayList
   def insert(index,element)
 
     element_on_deck = nil
-
-    # insert doesn't add another array so had to add weird break condition
     loop do
       element_on_deck ? element = element_on_deck : element
-      element_on_deck = self.get(index)
-      break if index == master_index
-      self.set(index, element)
+      element_on_deck = @container.get(index)
+      @container.set(index, element)
       index += 1
+      add_space if index == (size - 1)
+      break if element_on_deck == nil
     end
 
-    self.add(element_on_deck)
-
-  end
-
-  def master_index
-    (@size * fixed_array_count) + elements_in_last_array - 1
   end
 
   private
 
-  def nil_space?
-    @fixed_array_container.last.include?(nil)
-  end
-
+  # create a new array (double in size) and copy old stuff over
+  # need to preserve indexes, so have to copy old stuff in at beginning
   def add_space
-    @fixed_array_container << FixedArray.new.new_array(@size)
-  end
-
-  def elements_in_last_array
-    @fixed_array_container.last.count{|x| x != nil}
-  end
-
-  def fixed_array_count
-    @fixed_array_container.count - 1
-  end
-
-  def fixed_array_units(index)
-    index / @size
-  end
-
-  def position_in_fixed_array(index)
-    index % @size
+    old_size = size
+    new_size = size * 2
+    holding_container = FixedArray.new(new_size)
+    old_size.times do |index|
+      item = @container.get(index)
+      next if item == nil
+      holding_container.set(index, item)
+    end
+    @container = holding_container
   end
 
 end

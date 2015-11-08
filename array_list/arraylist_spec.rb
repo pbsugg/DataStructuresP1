@@ -4,24 +4,21 @@ require_relative 'arraylist.rb'
 
 describe "ArrayList" do
 
-  let(:fixed_array){FixedArray.new}
-  let(:array_list){ArrayList.new}
+  let(:array_list){ArrayList.new(5)}
 
   context "new" do
-    it "should create a new array of the initial specified size" do
-      expect(array_list.new_array(5).count).to eq(Array.new(5).count)
+
+    it "should have an underlying FixedArray type" do
+      expect(array_list.container).to be_kind_of(FixedArray)
     end
 
-    it "should return the array" do
-      expect(array_list.new_array(5)).to eq(fixed_array.new_array(5))
+    it "responds to commands like a FixedArray" do
+        expect(array_list.container).to respond_to(:set).with(2).arguments
     end
+
   end
 
   context "add" do
-
-    before(:each) do
-      array_list.new_array(5)
-    end
 
     it "should return the correct element" do
       expect(array_list.add("test")).to eq("test")
@@ -29,19 +26,19 @@ describe "ArrayList" do
 
     it "should add the element in the correct spot" do
       array_list.add("test")
-      expect(array_list.fixed_array_container.last).to eq(["test", nil, nil, nil, nil])
+      expect(array_list.get(0)).to eq("test")
     end
 
     it "should add the element to the first nil space when there are already other elements" do
       array_list.add("test1")
       array_list.add("test2")
-      expect(array_list.fixed_array_container.last).to eq(["test1", "test2", nil, nil, nil])
+      expect(array_list.get(1)).to eq("test2")
     end
 
     it "should create a new array when appropriate" do
       5.times{|i| array_list.add("test")}
       array_list.add("another")
-      expect(array_list.fixed_array_container.last[0]).to eq("another")
+      expect(array_list.get(5)).to eq("another")
     end
 
   end
@@ -49,7 +46,6 @@ describe "ArrayList" do
   context "get " do
 
     before(:each) do
-      array_list.new_array(5)
       alphabet = ("a".."z").to_a
       alphabet.each{|i| array_list.add(i)}
     end
@@ -62,44 +58,38 @@ describe "ArrayList" do
       expect(array_list.get(25)).to eq("z")
     end
 
-    it "should tell if the desired index is out of bounds" do
-      expect(array_list.get(26)).to eq("index out of range")
-    end
-
-
   end
 
   context "set" do
 
     before(:each) do
-      array_list.new_array(5)
       alphabet = ("a".."z").to_a
       alphabet.each{|i| array_list.add(i)}
     end
 
     it "should reset an element in the array" do
       array_list.set(5, "hello")
-      expect(array_list.fixed_array_container[1][0]).to eq("hello")
+      expect(array_list.get(5)).to eq("hello")
       array_list.set(17, "goodbye")
-      expect(array_list.fixed_array_container[3][2]).to eq("goodbye")
+      expect(array_list.get(17)).to eq("goodbye")
 
     end
 
     it "should not reset an element outside of the bounds" do
-      expect(array_list.set(30, "hello")).to eq("index out of range")
+      expect(array_list.set(100, "hello")).to eq("Desired index out of bounds")
     end
   end
 
   context "size" do
 
-    before(:each) do
-      array_list.new_array(5)
-      alphabet = ("a".."z").to_a
-      alphabet.each{|i| array_list.add(i)}
+    it "should return the current size of the list" do
+      expect(array_list.size).to eq(5)
     end
 
-    it "should return the current size of the list" do
-      expect(array_list.size).to eq(26)
+    it "should double each time you add an element beyond the existing bounds of the array" do
+      list = (1..6).to_a
+      list.each{|i| array_list.add(i)}
+      expect(array_list.size).to eq(10)
     end
 
   end
@@ -107,9 +97,8 @@ describe "ArrayList" do
   context "insert(index, element)" do
 
     before(:each) do
-      array_list.new_array(5)
-      alphabet = (1..20).to_a
-      alphabet.each{|i| array_list.add(i)}
+      list = (1..20).to_a
+      list.each{|i| array_list.add(i)}
       array_list.insert(5, "test")
     end
 
@@ -123,7 +112,7 @@ describe "ArrayList" do
     end
 
     it 'should add more fixed arrays if necessary' do
-      expect(array_list.fixed_array_container.last).to eq([20,nil,nil,nil,nil])
+      expect(array_list.size).to eq(40)
     end
 
   end
