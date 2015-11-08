@@ -43,7 +43,7 @@ class Set
   # block = some block of code
   # go through every element, calls whatever block was passed
   # not destructive, returns a new set
-  def iterate(block)
+  def iterate(&block)
     return_set = Set.new
     size.times do |index|
       element = @container.get(index)
@@ -64,8 +64,8 @@ class Set
     return self if other_set.size == 0
     result_set = Set.new
     union_test = Proc.new {|x| result_set.add(x)}
-    self.iterate(union_test)
-    other_set.iterate(union_test)
+    self.iterate(&union_test)
+    other_set.iterate(&union_test)
     result_set
   end
 
@@ -73,21 +73,21 @@ class Set
   def intersection(other_set)
     return other_set if other_set.size == 0
     intersection_test = lambda {|x| x if other_set.contains?(x)}
-    iterate(intersection_test)
+    iterate(&intersection_test)
   end
 
   # return elements in self that are not in other set
   def difference(other_set)
     return self if other_set.size == 0
     difference_test = lambda {|x| x unless other_set.contains?(x)}
-    iterate(difference_test)
+    iterate(&difference_test)
   end
 
   # test if other_set is a subset of self
   def subset(other_set)
     candidate = other_set
     subset_block = lambda{|x| candidate.remove(x) if candidate.contains?(x)}
-    iterate(subset_block)
+    iterate(&subset_block)
     return true if candidate.size == 0
     false
   end

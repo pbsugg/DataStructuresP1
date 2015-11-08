@@ -1,5 +1,5 @@
 require_relative "../fixed_array/fixed_array.rb"
-
+# Dynamic array built on top of my fixed array
 
 class ArrayList
 
