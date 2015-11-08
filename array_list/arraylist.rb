@@ -30,7 +30,7 @@ class ArrayList
     element
   end
 
-  def get(index)  
+  def get(index)
     if index >= 0 && index < size
       @container.get(index)
     else
