@@ -91,21 +91,93 @@ describe "Single Linked List" do
 
   end
 
+  context 'size' do
+
+    let(:fourth_node){Node.new(4)}
+    let(:fifth_node){Node.new(5)}
+    let(:sixth_node){Node.new(6)}
+
+    before (:each) do
+      linked_list.insert_last(fourth_node)
+      linked_list.insert_last(fifth_node)
+      linked_list.insert_last(sixth_node)
+    end
+
+    it 'correctly reports the size' do
+      expect(linked_list.size).to eq(6)
+    end
+
+    it 'adjusts its size reporting after a node is removed' do
+      linked_list.remove_last
+      expect(linked_list.size).to eq(5)
+    end
+
+  end
+
 
   context 'get(index)' do
+
+    let(:fourth_node){Node.new(4)}
+    let(:fifth_node){Node.new(5)}
+    let(:sixth_node){Node.new(6)}
+
+    before (:each) do
+      linked_list.insert_last(fourth_node)
+      linked_list.insert_last(fifth_node)
+      linked_list.insert_last(sixth_node)
+    end
+
+
+    it 'gets the head at position 0' do
+      expect(linked_list.get(0)).to eq(first_node)
+    end
+
+    it 'gets the tail at the position size - 1' do
+      expect(linked_list.get(5)).to eq(sixth_node)
+    end
+
+    it 'can get an element in the middle' do
+      expect(linked_list.get(2)).to eq(third_node)
+    end
 
   end
 
 
   context 'set(index, node)' do
 
+
+
+    let(:another_node){Node.new("insert")}
+    let(:fourth_node){Node.new(4)}
+    let(:fifth_node){Node.new(5)}
+    let(:sixth_node){Node.new(6)}
+
+    before (:each) do
+      linked_list.insert_last(fourth_node)
+      linked_list.insert_last(fifth_node)
+      linked_list.insert_last(sixth_node)
+    end
+
+    it 'can reset the head at position 0' do
+      linked_list.set(0, another_node)
+      expect(linked_list.head).to eq(another_node)
+    end
+
+    it 'resets the tail at the position size - 1' do
+      linked_list.set((linked_list.size - 1), another_node)
+      expect(linked_list.tail).to eq(another_node)
+    end
+
+    it 'resets an element in the middle' do
+      linked_list.set((linked_list.size - 1), another_node)
+      expect(linked_list.tail).to eq(another_node)
+    end
+
+    it 'does not resize the node' do
+      linked_list.set((linked_list.size - 1), another_node)
+      expect(linked_list.size).to eq(6)
+    end
+
   end
-
-
-  context 'size' do
-
-  end
-
-
 
 end

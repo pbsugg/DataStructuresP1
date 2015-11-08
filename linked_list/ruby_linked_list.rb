@@ -69,10 +69,14 @@ class LinkedList
   # get the previous node to the the current index
     # set its next pointer next pointer to node
   def set(index, new_node)
-    old_item = get(index)
-    new_node.next = old_item.next
-    prev_node = get(index - 1)
-    prev_node.next = new_node
+    if index == 0
+      insert_first(new_node)
+    else
+      old_item = get(index)
+      new_node.next = old_item.next
+      prev_node = get(index - 1)
+      prev_node.next = new_node
+    end
   end
 
   def size
