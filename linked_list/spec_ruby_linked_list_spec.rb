@@ -8,6 +8,7 @@ describe "Single Linked List" do
   let(:second_node){Node.new(2)}
   let(:third_node){Node.new(3)}
 
+
   before (:each) do
     linked_list.insert_first(third_node)
     linked_list.insert_first(second_node)
@@ -18,12 +19,43 @@ describe "Single Linked List" do
 
     it 'can add something new to the head' do
       expect(linked_list.head).to eq(first_node)
-
     end
+
+
+    it 'correct tracks the tail when there is one value' do
+      linked_list.remove_first
+      linked_list.remove_first
+      expect(linked_list.tail).to eq(third_node)
+    end
+
+    it 'correctly tracks the head when there is one value' do
+      linked_list.remove_first
+      linked_list.remove_first
+      expect(linked_list.head).to eq(third_node)
+    end
+
+    it 'correctly tracks the head when there are multiple values' do
+      expect(linked_list.head).to eq(first_node)
+    end
+
+    it 'correctly tracks the tail when there are multiple values' do
+      expect(linked_list.tail).to eq(third_node)
+    end
+
+    it 'correctly tracks the size with multiple values' do
+      expect(linked_list.size).to eq(3)
+    end
+
+    it 'correctly tracks the size when there is one value' do
+      linked_list.remove_first
+      linked_list.remove_first
+      expect(linked_list.size).to eq(1)
+    end
+
 
   end
 
-  context 'remove' do
+  context 'remove_first' do
 
     before (:each) do
       linked_list.remove_first
@@ -37,8 +69,40 @@ describe "Single Linked List" do
       expect(linked_list.head.next).to eq(third_node)
     end
 
-    it 'correctly disconnects the old first node' do
-      expect(first_node.next).to eq(nil)
+    it 'correctly tracks the head when there are multiple values' do
+      expect(linked_list.head).to eq(second_node)
+    end
+
+    it 'correctly tracks the tail when there are multiple values' do
+      expect(linked_list.tail).to eq(third_node)
+    end
+
+    it 'correctly tracks the size with multiple values' do
+      expect(linked_list.size).to eq(2)
+    end
+
+    it 'correctly tracks the size when there is one value' do
+      linked_list.remove_first
+      expect(linked_list.size).to eq(1)
+    end
+
+
+    it 'correctly tracks the head when there are no values' do
+      linked_list.remove_first
+      linked_list.remove_first
+      expect(linked_list.head).to eq(nil)
+    end
+
+    it 'correctly tracks the tail when there are no value' do
+      linked_list.remove_first
+      linked_list.remove_first
+      expect(linked_list.tail).to eq(nil)
+    end
+
+    it 'correctly tracks the size with no values' do
+      linked_list.remove_first
+      linked_list.remove_first
+      expect(linked_list.size).to eq(0)
     end
 
   end
@@ -53,21 +117,28 @@ describe "Single Linked List" do
     end
 
     it 'inserts another node into the chain' do
-      expect(linked_list.tail).to eq(fourth_node)
+      expect(linked_list.get_tail).to eq(fourth_node)
     end
 
     it 'links it up with the previous last node' do
-      expect(linked_list.second_to_tail).to eq(third_node)
+      expect(linked_list.get_second_to_tail).to eq(third_node)
     end
 
     it 'gives the last element a vale of nil' do
-      tail = linked_list.tail
+      tail = linked_list.get_tail
       expect(tail.next).to eq(nil)
     end
 
+    it 'correctly tracks the tail pointer value' do
+      expect(linked_list.tail_pointer).to eq(third_node)
+    end
+
+    it 'correctly tracks the size' do
+      expect(linked_list.size).to eq(4)
+    end
   end
 
-  context 'remove' do
+  context 'remove last' do
 
     let(:fourth_node){Node.new(4)}
 
@@ -77,11 +148,11 @@ describe "Single Linked List" do
     end
 
     it 'should make the previous-to-last node the next tail' do
-      expect(linked_list.tail).to eq(third_node)
+      expect(linked_list.get_tail).to eq(third_node)
     end
 
     it 'should turn the current tails next pointer to nil' do
-      expect(linked_list.tail.next).to eq(nil)
+      expect(linked_list.get_tail.next).to eq(nil)
     end
 
     it 'should leave the previous tail untouched' do
@@ -145,8 +216,6 @@ describe "Single Linked List" do
 
   context 'set(index, node)' do
 
-
-
     let(:another_node){Node.new("insert")}
     let(:fourth_node){Node.new(4)}
     let(:fifth_node){Node.new(5)}
@@ -165,12 +234,17 @@ describe "Single Linked List" do
 
     it 'resets the tail at the position size - 1' do
       linked_list.set((linked_list.size - 1), another_node)
-      expect(linked_list.tail).to eq(another_node)
+      expect(linked_list.get_tail).to eq(another_node)
     end
+
+      it 'correctly resets the tail at position size - 1' do
+        linked_list.set((linked_list.size - 1), another_node)
+        expect(linked_list.tail).to eq(another_node)
+      end
 
     it 'resets an element in the middle' do
       linked_list.set((linked_list.size - 1), another_node)
-      expect(linked_list.tail).to eq(another_node)
+      expect(linked_list.get_tail).to eq(another_node)
     end
 
     it 'does not resize the node' do
