@@ -1,4 +1,4 @@
-require_relative 'arraylist.rb'
+require_relative 'array_list.rb'
 
 
 

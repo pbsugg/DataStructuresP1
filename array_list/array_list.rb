@@ -41,17 +41,15 @@ class ArrayList
   # put element in existing position, take everything and shift it down one
 
   def insert(index,element)
-
+    new_size = size + 1
     element_on_deck = nil
-    loop do
+    while index < new_size
       element_on_deck ? element = element_on_deck : element
       element_on_deck = @container.get(index)
       @container.set(index, element)
       index += 1
       add_space if index == (size - 1)
-      break if element_on_deck == nil
     end
-
   end
 
   private

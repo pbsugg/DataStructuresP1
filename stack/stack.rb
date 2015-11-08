@@ -1,27 +1,20 @@
 # Implementation of the stack data structure
-# Created using my "fixedarray class"
+# Created using my "dynamic array" class
 
-# have to think: with fixed arrays, how will I handle if grows too large?
+# with fixed arrays, how will I handle if grows too large?
 
 
-require_relative 'fixed_array_simple.rb'
+require_relative '../array_list/array_list.rb'
 
-class Stack
+class StackDynamicArray
 
-  # give me the whole stack-dealing with fact that underlying data structure is fixed array
-  def get_stack
-    @stack.array
+  def initialize
+    @container = ArrayList.new(10)
   end
 
-  # create a new stack of a default_size 10
-  def new_stack
-    @stack = FixedArray.new
-    @stack.new_array(10)
-    @stack.array
-  end
-
+  # insert the newest element at the front
   def push(element)
-    @stack.set(0, element)
+    @stack.set(0, element
   end
 
   def pop

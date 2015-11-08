@@ -2,7 +2,7 @@ require_relative 'stack.rb'
 
 describe 'Stack' do
 
-  let(:test_sample){Stack.new}
+  let(:test_sample){StackDynamicArray.new}
 
     before(:each) do
       test_sample.new_stack
