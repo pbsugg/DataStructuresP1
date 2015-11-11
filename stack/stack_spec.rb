@@ -30,7 +30,7 @@ describe 'Stack' do
         expect(stack.pop).to eq(nil)
       end
 
-      it 'should be able to add a new element to the stack' do
+      it 'should make the last in the first off' do
         stack.push(6)
         expect(stack.pop).to eq(6)
       end

@@ -22,6 +22,7 @@ class LinkedList
     @size += 1
     if @head == nil
       @head = node_element
+      @tail_pointer = @head
       @tail = @head
     else
       node_element.next = @head
@@ -55,9 +56,12 @@ class LinkedList
 
   # how does this run in constant time if you have to recalculate tail pointer every time after?
   def remove_last
-    @tail = @tail_pointer
-    @tail.next = nil
+    # @tail_pointer = get_second_to_tail
+    @tail_pointer.next = nil
     @size -= 1
+    old_tail = @tail
+    @tail = @tail_pointer
+    old_tail
   end
 
 
