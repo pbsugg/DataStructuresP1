@@ -1,4 +1,4 @@
-class FixedArray
+  class FixedArray
 
   attr_reader :space, :container, :size
 
