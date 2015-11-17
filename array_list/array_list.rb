@@ -25,7 +25,7 @@ class ArrayList
       if @container.get(index) == nil
         @container.set(index, element)
         break
-      end
+      end 
     end
     element
   end
