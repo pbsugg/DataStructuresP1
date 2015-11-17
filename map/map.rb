@@ -1,4 +1,4 @@
-require_relative "../array_list/arraylist.rb"
+require_relative "../array_list/array_list.rb"
 
 # Keys are unique, multiple keys can store same value
 # Ideally retrieves all values in constant time
@@ -32,7 +32,9 @@ class Map
     value = nil
     size.times do |index|
       pair = @container.get(index)
-      value = pair.get(1) if key == pair.get(0)
+      if key == pair.get(0)
+        value = pair.get(1) unless nil
+      end
     end
     if value
       return value
@@ -69,7 +71,6 @@ class Map
     current_size.times do |index|
       old_pair = @container.get(index)
       old_key = old_pair.get(0)
-      remove(old_key)
       # iterator must call methods on fixed array
       new_pair = block.call(old_pair)
       # protect against nils in result
