@@ -30,8 +30,17 @@ describe "Map" do
     expect(map_object.has_key?(1)).to eq(false)
   end
 
-  it 'can iterate through a block, passing it each value and returning result' do
-
+  it 'can iterate through the map, passing it each value and changing the value according to the block' do
+    map_object.set(1,2)
+    map_object.set(2,3)
+    # set all values to 5
+    multiplier = lambda do |element|
+      element.set(1,5)
+      element
+    end
+    map_object.iterate(&multiplier)
+    expect(map_object.get(0)).to eq(5)
+    expect(map_object.get(2)).to eq(5)
   end
 
 end

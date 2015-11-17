@@ -19,7 +19,7 @@ class Map
   # add a new fixed array
   # if key is already present replace current value, else add
   def set(key, value)
-    remove(key)if get(key)
+    remove(key) if get(key)
     element = FixedArray.new(2)
     element.set(0, key)
     element.set(1, value)
@@ -57,6 +57,28 @@ class Map
       return true if key == pair.get(0)
     end
     false
+  end
+
+  # doesn't matter what order it is put back, order not part of spec
+
+  # go through every value
+  # pass it the block
+  # get rid of the old key/value pair, put the new one in
+  def iterate(&block)
+    current_size = size
+    current_size.times do |index|
+      old_pair = @container.get(index)
+      old_key = old_pair.get(0)
+      remove(old_key)
+      # iterator must call methods on fixed array
+      new_pair = block.call(old_pair)
+      # protect against nils in result
+      if new_pair.get(0)
+        set(new_pair.get(0), new_pair.get(1))
+      else
+        next
+      end
+    end
   end
 
   def size
