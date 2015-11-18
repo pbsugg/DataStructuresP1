@@ -20,8 +20,23 @@ class GraphNode
 
   # takes a block, returns true if block passes for any of "downstream" edges of current one
   # block takes form {|node| [some condition of node] == true] }
+
+  # run recursively
+  # idea is that if any one of these tests is positive, you want the whole function to return true
+
+  # get all edges
+  # run your block on those edges
+  # look at the edges of those edges--repeat, etc.
+  # keep going until you run out of edges to test
+
+
   def exists?(&block)
-    @edges.each{ |node| return true if block.call(node) }
+    @edges.each do |node|
+      # base case
+      return true if block.call(node)
+      # recursive case
+      return true if node.exists?(&block)
+    end
     false
   end
 

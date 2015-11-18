@@ -31,6 +31,9 @@ describe "Graphnode" do
 
   context 'exists? function with block' do
 
+    let(:node4){GraphNode.new(4)}
+    let(:node5){GraphNode.new(5)}
+
     before (:each) do
       node1.add_edge(node2)
       node1.add_edge(node3)
@@ -46,5 +49,35 @@ describe "Graphnode" do
       expect(node1.exists?(&block2)).to eq(false)
     end
 
+    it 'returns true with a cyclic graph (where edges point back to self)' do
+      node3.add_edge(node1)
+      block3 = lambda{|node| node.value == 1}
+      expect(node1.exists?(&block3)).to eq(true)
+    end
+
+    it 'returns false with a multi-dimensional cyclic graph where none of the edges satisfy the block' do
+      node2.add_edge(node4)
+      node3.add_edge(node5)
+      block = lambda{|node| node.value == 15}
+      expect(node1.exists?(&block)).to eq(false)
+    end
+
+    it 'returns true when node is buried several layers deep' do
+      node2.add_edge(node4)
+      node4.add_edge(node5)
+      block = lambda{|node| node.value == 5}
+      expect(node1.exists?(&block)).to eq(true)
+    end
+
+    it 'returns true when you start midway down the chain of edges' do
+      node2.add_edge(node4)
+      node4.add_edge(node5)
+      block = lambda{|node| node.value == 5}
+      expect(node2.exists?(&block)).to eq(true)      
+    end
+
   end
+
+
+
 end
