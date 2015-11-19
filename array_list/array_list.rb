@@ -6,7 +6,7 @@ class ArrayList
   attr_reader :container
 
   # function to create new
-  def initialize(size)
+def initialize(size)
     @container = FixedArray.new(size)
   end
 
@@ -25,7 +25,7 @@ class ArrayList
       if @container.get(index) == nil
         @container.set(index, element)
         break
-      end 
+      end
     end
     element
   end
