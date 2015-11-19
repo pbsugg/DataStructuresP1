@@ -15,10 +15,13 @@ class Tree
 
   # another recursive solution
   # get the children of the root node
-  # for each one, get its children, keep getting them
+  # for each one, get its children
+  # once you reach a point where there are no more children, check each value against the block
 
+# big question for me here is how to avoid calls to the underlying array.
+  # that interface should be implemented in the node tree class
   def search(&block(value))
-    child_spaces.times do |location|
+    @ do |location|
       @root.children
     block(value).call(node)
 

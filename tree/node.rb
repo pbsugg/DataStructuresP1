@@ -26,6 +26,10 @@ class TreeNode
     @child_nodes.size - @child_nodes.space
   end
 
+  def leaf?
+    number_children == 0
+  end
+
   # returns how many spaces for children the underlying array has (not same as number of  children)
   def child_spaces
     @child_nodes.size
