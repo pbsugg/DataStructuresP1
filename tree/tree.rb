@@ -20,14 +20,18 @@ class Tree
 
 # big question for me here is how to avoid calls to the underlying array.
   # that interface should be implemented in the node tree class
-  def search(&block(value))
+  def search(value, &block)
     counter = 1
-    while (return_nth_child(counter) != 0)
-      node = return_nth_child(space)
-      return node if block(value).call(node) == true
-      return node.search(&block(value))
+    while @root.return_nth_child(counter)
+      node = @root.return_nth_child(counter)
+      if node.leaf?
+        return node if block.call(value, node)
+      else
+        search(value, &block)
+      end
       counter += 1
     end
   end
+
 
 end
