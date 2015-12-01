@@ -37,7 +37,7 @@ describe "Tree" do
 
     end
 
-    it 'should add new nodes through the node class' do
+    it 'should be able to get a 1-level deep node' do
       searchblock1 = lambda {|value, node| node if node.value == value }
       expect(tree.search(3, &searchblock1)).to eq(node3)
     end
