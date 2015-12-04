@@ -20,29 +20,36 @@ class OrderedTree
     # go to left side of tree, add a node to left
 
 # could do this in two steps:
-# 1) traverse the node, enque everything
-# 2) go through the stack (now in order), and add the value to first empty slot
+# 1) traverse the node, add to stack
+# 2)pop the stack (now in order) one by one, and add the new node to the first empty slot
 # this makes the assumption that I *receive* all the elements in order (will handle that in the next step)
 
+
   def add_node(node_to_add)
+    stack = StackDynamicArray.new(3)
     if @root.add_child(node_to_add) == 0
 
   end
 
 
 
-  private
 
+  # create a stack--preorder traversal (DLR)
 
-  # create a stack
-  #
-  def convert_ordered_tree_to_queue
-    stack =
-
+  def convert_to_stack(starting_node, stack)
+    stack.push(starting_node.value)
+    convert_to_stack(starting_node.left_node, stack)
+    convert_to_stack(starting_node.right_node, stack)
   end
 
-  def fill_first_empty(queue)
-
+  # want to add it in the first empty space
+  def fill_first_empty(node_to_add, stack)
+    next_node_in_stack = stack.pop
+    while next_node_in_stack == nil
+      target_node_in_stack = next_node_in_stack
+      next_node_in_stack = stack.pop
+    end
+    target_node_in_stack = node_to_add
   end
 
 end
