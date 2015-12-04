@@ -16,8 +16,8 @@ class BinaryNode
       left_node = node
     elsif right_node == nil
       right_node = node
-    # if both nodes are full
     else
+      # if both nodes are full
       0
   end
 
