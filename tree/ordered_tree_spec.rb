@@ -25,13 +25,15 @@ describe "OrderedTree" do
     it 'takes the data from the target (root) node first' do
       stack = StackDynamicArray.new(3)
       test_stack = ordered_tree.convert_to_stack(ordered_tree.root, stack)
-      6.times{|element| stack.pop}
+      2.times{|element| stack.pop}
       expect(stack.pop).to eq(node1)
     end
 
+    it 'can handle a 2-deep recursive array'
+
     it 'puts the elements into the stack in the correct order'
 
-    it 'can handle a 2-deep recursive array'
+
 
   end
 

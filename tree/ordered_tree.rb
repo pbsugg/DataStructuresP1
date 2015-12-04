@@ -37,8 +37,9 @@ class OrderedTree
 
   def convert_to_stack(starting_node, stack)
     stack.push(starting_node)
-    convert_to_stack(starting_node.left_node, stack)
-    convert_to_stack(starting_node.right_node, stack)
+    # just skip it if it's a nil
+    convert_to_stack(starting_node.left_node, stack) if starting_node.left_node != nil
+    convert_to_stack(starting_node.right_node, stack) if starting_node.right_node != nil
     stack
   end
 
