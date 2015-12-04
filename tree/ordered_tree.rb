@@ -6,6 +6,7 @@ require_relative '../stack/stack.rb'
 
 class OrderedTree
 
+  attr_reader :root
 
   def initialize(node)
     @root = node
@@ -27,19 +28,18 @@ class OrderedTree
 
   def add_node(node_to_add)
     stack = StackDynamicArray.new(3)
-    if @root.add_child(node_to_add) == 0
-
+    convert_to_stack(@root, stack)
+    fill_first_empty(node_to_add, stack)
   end
-
-
 
 
   # create a stack--preorder traversal (DLR)
 
   def convert_to_stack(starting_node, stack)
-    stack.push(starting_node.value)
+    stack.push(starting_node)
     convert_to_stack(starting_node.left_node, stack)
     convert_to_stack(starting_node.right_node, stack)
+    stack
   end
 
   # want to add it in the first empty space

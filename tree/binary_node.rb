@@ -2,7 +2,8 @@
 
 class BinaryNode
 
-  attr_reader :value, :left_node, :right_node
+  attr_reader :value
+  attr_accessor :left_node, :right_node
 
   def initialize(value)
     @value = value
@@ -12,13 +13,14 @@ class BinaryNode
 
   # add first to left, then to right
   def add_child(node)
-    if left_node == nil
-      left_node = node
-    elsif right_node == nil
-      right_node = node
+    if @left_node == nil
+      @left_node = node
+    elsif @right_node == nil
+      @right_node = node
     else
       # if both nodes are full
       0
+    end
   end
 
   # kind of cheating here using the array but not gaining a big advantage
