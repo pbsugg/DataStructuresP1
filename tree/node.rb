@@ -2,7 +2,7 @@
 
 
 require_relative '../array_list/array_list.rb'
-
+  
 class TreeNode
 
   attr_reader :value

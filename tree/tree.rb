@@ -26,7 +26,7 @@ class Tree
     while @root.return_nth_child(counter)
       node = @root.return_nth_child(counter)
       if !node.leaf?
-        node = node.child_nodes
+        node = node.children
         search(value, &block)
       else
         return_node = node if block.call(value, node)
