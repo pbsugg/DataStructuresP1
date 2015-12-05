@@ -14,15 +14,16 @@ describe "OrderedTree" do
     node1.add_child(node3)
   end
 
-  # let(:node4){BinaryNode.new(4)}
-  # let(:node5){BinaryNode.new(5)}
-  # let(:node6){BinaryNode.new(6)}
-  # let(:node7){BinaryNode.new(7)}
+  let(:node4){BinaryNode.new(4)}
+  let(:node5){BinaryNode.new(5)}
+  let(:node6){BinaryNode.new(6)}
+  let(:node7){BinaryNode.new(7)}
 
 
-  context 'convert_to_queue' do
+  context 'convert_to_queue basic' do
 
     let(:queue){QueueLinkedList.new}
+
     before(:each) do
       queute_test = ordered_tree.convert_to_queue(ordered_tree.root, queue)
     end
@@ -34,22 +35,44 @@ describe "OrderedTree" do
     it 'places the left and right nodes of the root correctly' do
       queue.dequeue
       expect(queue.dequeue).to eq(node2)
-      # expect(queue.dequeue).to eq(node3)
+      expect(queue.dequeue).to eq(node3)
     end
-
-    it 'can handle a 2-deep recursive array'
-
-
-    it 'puts the elements into the stack in the correct order'
-
-
 
   end
 
-  context 'add new element correctly to stack' do
+  context 'convert_to_queue 2 levels deep' do
 
-    it 'adds it to the last nil element before a non-nil element is encountered'
+    let(:queue){QueueLinkedList.new}
 
+    before (:each) do
+      node2.add_child(node4)
+      node2.add_child(node5)
+      node3.add_child(node6)
+      node3.add_child(node7)
+      queue_test = ordered_tree.convert_to_queue(ordered_tree.root, queue)
+    end
+
+    it 'can handle a 2-deep recursive array' do
+      expect(queue.dequeue).to eq(node1)
+      5.times{|element| queue.dequeue}
+      expect(queue.dequeue).to eq(node7)
+    end
+
+    it 'puts the elements into the queue in the correct order' do
+      # this is how they should come out with a preorder traversal (DLR)
+      expect(queue.dequeue).to eq(node1)
+      expect(queue.dequeue).to eq(node2)
+      expect(queue.dequeue).to eq(node4)
+      expect(queue.dequeue).to eq(node5)
+      expect(queue.dequeue).to eq(node3)
+      expect(queue.dequeue).to eq(node6)
+      expect(queue.dequeue).to eq(node7)
+    end
+
+  end
+
+  context "add a new item to the queue" do
+    
   end
 
 

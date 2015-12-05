@@ -65,7 +65,7 @@ class LinkedList
     @size -= 1
     old_tail = @tail
     @tail_pointer = get_second_to_tail
-    @tail_pointer.next = nil
+    @tail_pointer.next = nil unless @tail_pointer == nil
     @tail = get_tail
     @tail_pointer = get_second_to_tail
     old_tail

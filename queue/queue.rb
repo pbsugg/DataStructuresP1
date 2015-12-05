@@ -14,7 +14,7 @@ class QueueLinkedList
 
 # element must be of type node
   def enqueue(element)
-    # have to make it a node before you insert it
+    # have to make it a node before you insert it, so you get the original item back and not a node
     node = Node.new(element)
     @container.insert_first(node)
   end
