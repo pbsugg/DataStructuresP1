@@ -10,7 +10,7 @@ require_relative 'singly_linked_list_node.rb'
 
 class LinkedList
 
-  attr_reader :head, :tail, :tail_pointer, :size
+  attr_accessor :head, :tail, :tail_pointer, :size
 
   def initialize
     @head = nil
@@ -21,14 +21,13 @@ class LinkedList
 
   # must be a node class element
   def insert_first(node_element)
-
-    if @size == 1
+    if @size == 0
+      @head = node_element
+      @tail = node_element
+    elsif @size == 1
       node_element.next = @head
       @tail_pointer = @head
       @head = node_element
-    elsif @head == nil
-      @tail_pointer = @head
-      @tail = @head
     else
       node_element.next = @head
       @head = node_element
@@ -65,9 +64,10 @@ class LinkedList
     # @tail_pointer = get_second_to_tail
     @size -= 1
     old_tail = @tail
-    @tail = @tail_pointer
     @tail_pointer = get_second_to_tail
-    @tail_pointer.remove_after
+    @tail_pointer.next = nil
+    @tail = get_tail
+    @tail_pointer = get_second_to_tail
     old_tail
   end
 
@@ -107,7 +107,7 @@ class LinkedList
     # set its next pointer next pointer to node
   def set(index, new_node)
     if index == 0
-      insert_first(new_node)  
+      insert_first(new_node)
     else
       old_item = get(index)
       new_node.next = old_item.next

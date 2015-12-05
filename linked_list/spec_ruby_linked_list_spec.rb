@@ -147,8 +147,6 @@ describe "Single Linked List" do
     end
 
     it 'should make the previous-to-last node the next tail' do
-      p "tail pointer"
-      p linked_list.tail_pointer
       expect(linked_list.tail).to eq(second_node)
     end
 
@@ -156,9 +154,13 @@ describe "Single Linked List" do
       expect(linked_list.tail.next).to eq(nil)
     end
 
-    it 'should recalculate the tail pointer'
+    it 'should recalculate the tail pointer' do
+      expect(linked_list.tail_pointer).to eq(first_node)
+    end
 
-    it 'should alter the size accordingly'
+    it 'should alter the size accordingly' do
+      expect(linked_list.size).to eq(2)
+    end
 
     it 'should leave the previous tail untouched' do
       expect(third_node.value).to eq(3)
