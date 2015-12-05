@@ -1,6 +1,6 @@
 require_relative 'binary_node.rb'
 require_relative 'ordered_tree.rb'
-require_relative '../stack/stack.rb'
+require_relative '../queue/queue.rb'
 
 describe "OrderedTree" do
 
@@ -20,16 +20,25 @@ describe "OrderedTree" do
   # let(:node7){BinaryNode.new(7)}
 
 
-  context 'convert_to_stack' do
+  context 'convert_to_queue' do
+
+    let(:queue){QueueLinkedList.new}
+    before(:each) do
+      queute_test = ordered_tree.convert_to_queue(ordered_tree.root, queue)
+    end
 
     it 'takes the data from the target (root) node first' do
-      stack = StackDynamicArray.new(3)
-      test_stack = ordered_tree.convert_to_stack(ordered_tree.root, stack)
-      2.times{|element| stack.pop}
-      expect(stack.pop).to eq(node1)
+      expect(queue.peel).to eq(node1)
+    end
+
+    it 'places the left and right nodes of the root correctly' do
+      queue.dequeue
+      expect(queue.dequeue).to eq(node2)
+      # expect(queue.dequeue).to eq(node3)
     end
 
     it 'can handle a 2-deep recursive array'
+
 
     it 'puts the elements into the stack in the correct order'
 

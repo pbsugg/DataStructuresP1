@@ -143,21 +143,26 @@ describe "Single Linked List" do
     let(:fourth_node){Node.new(4)}
 
     before (:each) do
-      linked_list.insert_last(fourth_node)
       linked_list.remove_last
     end
 
     it 'should make the previous-to-last node the next tail' do
-      expect(linked_list.get_tail).to eq(third_node)
+      p "tail pointer"
+      p linked_list.tail_pointer
+      expect(linked_list.tail).to eq(second_node)
     end
 
     it 'should turn the current tails next pointer to nil' do
-      expect(linked_list.get_tail.next).to eq(nil)
+      expect(linked_list.tail.next).to eq(nil)
     end
 
+    it 'should recalculate the tail pointer'
+
+    it 'should alter the size accordingly'
+
     it 'should leave the previous tail untouched' do
-      expect(fourth_node.value).to eq(4)
-      expect(fourth_node.next).to eq(nil)
+      expect(third_node.value).to eq(3)
+      expect(third_node.next).to eq(nil)
     end
 
   end
