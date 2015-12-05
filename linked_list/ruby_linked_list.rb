@@ -1,3 +1,5 @@
+require_relative 'singly_linked_list_node.rb'
+
 # re-implement the whole thing in Ruby, so I can use for other data structures down the line
 
 # how to make remove_last run in constant time?
@@ -8,7 +10,7 @@
 
 class LinkedList
 
-  attr_reader :head, :tail, :tail_pointer, :size
+  attr_accessor :head, :tail, :tail_pointer, :size
 
   def initialize
     @head = nil
@@ -19,20 +21,23 @@ class LinkedList
 
   # must be a node class element
   def insert_first(node_element)
-    @size += 1
-    if @head == nil
+    if @size == 0
       @head = node_element
+      @tail = node_element
+    elsif @size == 1
+      node_element.next = @head
       @tail_pointer = @head
-      @tail = @head
+      @head = node_element
     else
       node_element.next = @head
       @head = node_element
     end
+    @size += 1
   end
 
   def remove_first
     if @head == nil
-      no_value
+      nil
     elsif @size == 1
       @head = nil
       @tail = nil
@@ -57,10 +62,12 @@ class LinkedList
   # how does this run in constant time if you have to recalculate tail pointer every time after?
   def remove_last
     # @tail_pointer = get_second_to_tail
-    @tail_pointer.next = nil
     @size -= 1
     old_tail = @tail
-    @tail = @tail_pointer
+    @tail_pointer = get_second_to_tail
+    @tail_pointer.next = nil unless @tail_pointer == nil
+    @tail = get_tail
+    @tail_pointer = get_second_to_tail
     old_tail
   end
 
@@ -101,7 +108,6 @@ class LinkedList
   def set(index, new_node)
     if index == 0
       insert_first(new_node)
-      @head = new_node
     else
       old_item = get(index)
       new_node.next = old_item.next

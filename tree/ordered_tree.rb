@@ -1,5 +1,5 @@
 require_relative 'binary_node.rb'
-require_relative '../stack/stack.rb'
+require_relative '../queue/queue.rb'
 
 
 # this will be a binary tree--each node has two classes
@@ -35,22 +35,26 @@ class OrderedTree
 
   # create a stack--preorder traversal (DLR)
 
-  def convert_to_stack(starting_node, stack)
-    stack.push(starting_node)
+  # put all items in queue
+  # add new item last
+  # rebuild the tree, unloading the queue one by one
+
+  def convert_to_queue(starting_node, queue)
+    queue.enqueue(starting_node)
     # just skip it if it's a nil
-    convert_to_stack(starting_node.left_node, stack) if starting_node.left_node != nil
-    convert_to_stack(starting_node.right_node, stack) if starting_node.right_node != nil
-    stack
+    convert_to_queue(starting_node.left_node, queue) if starting_node.left_node != nil
+    convert_to_queue(starting_node.right_node, queue) if starting_node.right_node != nil
+    queue
   end
 
   # want to add it in the first empty space
-  def fill_first_empty(node_to_add, stack)
-    next_node_in_stack = stack.pop
-    while next_node_in_stack == nil
-      target_node_in_stack = next_node_in_stack
-      next_node_in_stack = stack.pop
-    end
-    target_node_in_stack = node_to_add
+
+  def add_to_queue(node_to_add, queue)
+    queue.enqueue(node_to_add)
   end
+
+  # additional steps:
+    # transfer first stack to second star
+
 
 end
