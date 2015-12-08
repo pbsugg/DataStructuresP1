@@ -27,6 +27,15 @@ class OrderedTree
 
 
   def tear_out_root
+    @root = nil
+  end
+
+  def write_queue_to_tree(queue)
+    queue_element = queue.dequeue
+    while queue.dequeue
+      @root = queue.dequeue
+      2.times{@root.add_child(queue.dequeue)}
+
   end
 
 
@@ -35,11 +44,11 @@ class OrderedTree
     queue = QueueLinkedList.new
     convert_to_queue(@root, queue)
     # get rid of root
-    @root = nil
+    tear_out_root
     # start re-inserting back into the tree
     queue_element = queue.dequeue
     while queue_element
-      
+
 
 
     add_to_queue(node_to_add, queue)
