@@ -18,11 +18,11 @@ describe "OrderedTree" do
   let(:node5){BinaryNode.new(5)}
   let(:node6){BinaryNode.new(6)}
   let(:node7){BinaryNode.new(7)}
+  let(:queue){QueueLinkedList.new}
 
 
   context 'convert_to_queue basic' do
 
-    let(:queue){QueueLinkedList.new}
 
     before(:each) do
       queute_test = ordered_tree.convert_to_queue(ordered_tree.root, queue)
@@ -72,7 +72,25 @@ describe "OrderedTree" do
   end
 
   context "add a new item to the queue" do
-    
+
+    let(:new_node){Node.new("new")}
+
+    before(:each) do
+      node1.add_child(node2)
+      node1.add_child(node3)
+      node2.add_child(node4)
+    end
+
+    it 'puts a new element in at the end of the queue (last to be ejected)' do
+      queue_test = ordered_tree.add_to_queue(new_node, queue)
+      3.times{queue.dequeue}
+      expect(queue.dequeue).to eq(new_node)
+    end
+
+  end
+
+  context "add a new item to the tree" do
+      
   end
 
 
