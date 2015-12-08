@@ -18,9 +18,12 @@ class BinaryNode
     elsif @right_node == nil
       @right_node = node
     else
-      # if both nodes are full
-      0
+      if (@left_node.left_node == nil || @left_node.right_node == nil)
+        @left_node.add_child(node)
+      else
+        @right_node.add_child(node)
     end
+
   end
 
   # kind of cheating here using the array but not gaining a big advantage

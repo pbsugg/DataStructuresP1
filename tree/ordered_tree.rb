@@ -6,7 +6,7 @@ require_relative '../queue/queue.rb'
 
 class OrderedTree
 
-  attr_reader :root
+  attr_accessor :root
 
   def initialize(node)
     @root = node
@@ -26,10 +26,32 @@ class OrderedTree
 # this makes the assumption that I *receive* all the elements in order (will handle that in the next step)
 
 
+  def tear_out_root
+    @root = nil
+  end
+
+  def write_queue_to_tree(queue)
+    queue_element = queue.dequeue
+    while queue.dequeue
+      @root = queue.dequeue
+      2.times{@root.add_child(queue.dequeue)}
+
+  end
+
+
+  # have to add the children back
   def add_node(node_to_add)
-    stack = StackDynamicArray.new(3)
-    convert_to_stack(@root, stack)
-    fill_first_empty(node_to_add, stack)
+    queue = QueueLinkedList.new
+    convert_to_queue(@root, queue)
+    # get rid of root
+    tear_out_root
+    # start re-inserting back into the tree
+    queue_element = queue.dequeue
+    while queue_element
+
+
+
+    add_to_queue(node_to_add, queue)
   end
 
 
