@@ -9,10 +9,8 @@ Pseudo:
 Input: Queue, element_to_add
 Output: Tree with new element inserted
 
-Issues: just one object (
-  Convert Tree to Queue (Level Order Traversal)
 
-  Sort the queue
+  Convert Tree to Queue (Level Order Traversal of tree)
 
   Evaluate where new element falls by popping from Queue1 to Queue2
     dequeue element1, put in holder

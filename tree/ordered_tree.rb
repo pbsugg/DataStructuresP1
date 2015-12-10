@@ -35,39 +35,55 @@ class OrderedTree
     while queue.dequeue
       @root = queue.dequeue
       2.times{@root.add_child(queue.dequeue)}
-
+    end
   end
 
 
   # have to add the children back
   def add_node(node_to_add)
-    queue = QueueLinkedList.new
-    convert_to_queue(@root, queue)
+    return_queue = QueueLinkedList.new
+    convert_to_queue_level_order(@root, return_queue)
     # get rid of root
     tear_out_root
     # start re-inserting back into the tree
     queue_element = queue.dequeue
     while queue_element
 
-
-
     add_to_queue(node_to_add, queue)
+    end
   end
 
 
-  # create a stack--preorder traversal (DLR)
+  # create a queue--preorder traversal ordered (DLR)
 
-  # put all items in queue
-  # add new item last
-  # rebuild the tree, unloading the queue one by one
-
-  def convert_to_queue(starting_node, queue)
+  def convert_to_queue_preorder(starting_node, queue)
     queue.enqueue(starting_node)
     # just skip it if it's a nil
-    convert_to_queue(starting_node.left_node, queue) if starting_node.left_node != nil
-    convert_to_queue(starting_node.right_node, queue) if starting_node.right_node != nil
+    convert_to_queue_preorder(starting_node.left_node, queue) if starting_node.left_node != nil
+    convert_to_queue_preorder(starting_node.right_node, queue) if starting_node.right_node != nil
     queue
   end
+
+  # create  queue from tree--level order traversal
+    # breadth-first search
+
+  def convert_to_queue_level_order(starting_node, return_queue)
+    aux_holding_queue = QueueLinkedList.new
+    aux_holding_queue.enqueue(starting_node)
+    node = nil
+    while !aux_holding_queue.empty?
+      node = aux_holding_queue.dequeue
+      return_queue.enqueue(node)
+      # check if left and right nodes are present
+      if node.left_node
+        aux_holding_queue.enqueue(node.left_node)
+      elsif node.right_node
+        aux_holding_queue.enqueue(node.right_node)
+      end
+    end
+    return_queue
+  end
+
 
   # want to add it in the first empty space
 
