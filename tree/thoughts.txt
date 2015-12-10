@@ -9,12 +9,10 @@ Pseudo:
 Input: Queue, element_to_add
 Output: Tree with new element inserted
 
-
   Convert Tree to Queue (Level Order Traversal of tree)
 
   Evaluate where new element falls by popping from Queue1 to Queue2
     dequeue element1, put in holder
-    dequeue element 2, put in second holder
     WHILE Queue1.peel != nil
       element1 == Queue1.dequeue
     IF element_to_add is >= element1

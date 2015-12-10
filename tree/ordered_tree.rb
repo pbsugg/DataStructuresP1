@@ -30,12 +30,13 @@ class OrderedTree
     @root = nil
   end
 
+
+  # level-order (breadth-first) write to tree
+  # take a queue to write
+  # pop the first element, make it the root
   def write_queue_to_tree(queue)
+    aux_holding_queue = QueueLinkedList.new
     queue_element = queue.dequeue
-    while queue.dequeue
-      @root = queue.dequeue
-      2.times{@root.add_child(queue.dequeue)}
-    end
   end
 
 
@@ -46,11 +47,8 @@ class OrderedTree
     # get rid of root
     tear_out_root
     # start re-inserting back into the tree
-    queue_element = queue.dequeue
-    while queue_element
+    reordered_queue = insert_to_queue_in_order(node_to_add, return_queue)
 
-    add_to_queue(node_to_add, queue)
-    end
   end
 
 
@@ -77,7 +75,8 @@ class OrderedTree
       # check if left and right nodes are present
       if node.left_node
         aux_holding_queue.enqueue(node.left_node)
-      elsif node.right_node
+      end
+      if node.right_node
         aux_holding_queue.enqueue(node.right_node)
       end
     end
@@ -93,6 +92,20 @@ class OrderedTree
 
   # additional steps:
     # transfer first stack to second star
+
+  def insert_to_queue_in_order(node_to_add, queue)
+    return_queue QueueLinkedList.new
+    while queue.peel != nil
+      existing_element == queue.dequeue
+      if node_to_add >= existing_element
+        return_queue.enqueue(node_to_add)
+        return_queue.enqueue(existing_element)
+      else
+        return_queue.enqueue(existing_element)
+      end
+    end
+    queue
+  end
 
 
 end

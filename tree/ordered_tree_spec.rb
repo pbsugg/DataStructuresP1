@@ -73,6 +73,8 @@ describe "OrderedTree" do
 
   context 'convert_to_queue_level_order' do
 
+    let(:queue){QueueLinkedList.new}
+
     before (:each) do
       node2.add_child(node4)
       node2.add_child(node5)
@@ -87,10 +89,21 @@ describe "OrderedTree" do
       expect(queue.dequeue).to eq(node1)
       expect(queue.dequeue).to eq(node2)
       expect(queue.dequeue).to eq(node3)
-      # expect(queue.dequeue).to eq(node4)
-      # expect(queue.dequeue).to eq(node5)
-      # expect(queue.dequeue).to eq(node6)
-      # expect(queue.dequeue).to eq(node7)
+      expect(queue.dequeue).to eq(node4)
+      expect(queue.dequeue).to eq(node5)
+      expect(queue.dequeue).to eq(node6)
+      expect(queue.dequeue).to eq(node7)
+    end
+
+    it 'should have a queue that registers as empty after all items are dequeued' do
+      6.times{queue.dequeue}
+      expect(queue.empty?).to eq(false)
+      queue.dequeue
+      expect(queue.empty?).to eq(true)
+    end
+
+    it 'should have the correct length' do
+      expect(queue.length).to eq(7)
     end
 
 
