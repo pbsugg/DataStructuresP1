@@ -1,0 +1,26 @@
+Pseudo for adding a new element to an ordered tree
+
+Still going to try to do this in a pre-order traversal.  Even if the data structure doesn't *look* like it's in order on the map, if it always comes out in a consistent fashion then I am in good shape.
+
+
+
+Pseudo:
+
+Input: Queue, element_to_add
+Output: Tree with new element inserted
+
+  Convert Tree to Queue (Level Order Traversal of tree)
+
+  Evaluate where new element falls by popping from Queue1 to Queue2
+    dequeue element1, put in holder
+    WHILE Queue1.peel != nil
+      element1 == Queue1.dequeue
+    IF element_to_add is >= element1
+      insert element_to_add
+      insert element1 to Queue2
+    ELSE
+      insert element1 to Queue2
+    END
+
+Convert Queue2 back to tree
+  (will still have to do this using a level-order traversal)

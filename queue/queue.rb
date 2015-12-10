@@ -39,5 +39,8 @@ class QueueLinkedList
     end
   end
 
+  def length
+    @container.size
+  end
 
 end

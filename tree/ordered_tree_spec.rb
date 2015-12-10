@@ -21,11 +21,11 @@ describe "OrderedTree" do
   let(:queue){QueueLinkedList.new}
 
 
-  context 'convert_to_queue basic' do
+  context 'convert_to_queue_preorder basic' do
 
 
     before(:each) do
-      queute_test = ordered_tree.convert_to_queue(ordered_tree.root, queue)
+      queute_test = ordered_tree.convert_to_queue_preorder(ordered_tree.root, queue)
     end
 
     it 'takes the data from the target (root) node first' do
@@ -40,7 +40,7 @@ describe "OrderedTree" do
 
   end
 
-  context 'convert_to_queue 2 levels deep' do
+  context 'convert_to_queue_preorder 2 levels deep' do
 
     let(:queue){QueueLinkedList.new}
 
@@ -49,7 +49,7 @@ describe "OrderedTree" do
       node2.add_child(node5)
       node3.add_child(node6)
       node3.add_child(node7)
-      queue_test = ordered_tree.convert_to_queue(ordered_tree.root, queue)
+      queue_test = ordered_tree.convert_to_queue_preorder(ordered_tree.root, queue)
     end
 
     it 'can handle a 2-deep recursive array' do
@@ -71,6 +71,47 @@ describe "OrderedTree" do
 
   end
 
+  context 'convert_to_queue_level_order' do
+
+    let(:queue){QueueLinkedList.new}
+
+    before (:each) do
+      node2.add_child(node4)
+      node2.add_child(node5)
+      node3.add_child(node6)
+      node3.add_child(node7)
+      queue_test = ordered_tree.convert_to_queue_level_order(ordered_tree.root, queue)
+    end
+
+    it 'puts the elements into the queue in the correct order' do
+      # this is how they should come out with a preorder traversal (DLR)
+      p queue
+      expect(queue.dequeue).to eq(node1)
+      expect(queue.dequeue).to eq(node2)
+      expect(queue.dequeue).to eq(node3)
+      expect(queue.dequeue).to eq(node4)
+      expect(queue.dequeue).to eq(node5)
+      expect(queue.dequeue).to eq(node6)
+      expect(queue.dequeue).to eq(node7)
+    end
+
+    it 'should have a queue that registers as empty after all items are dequeued' do
+      6.times{queue.dequeue}
+      expect(queue.empty?).to eq(false)
+      queue.dequeue
+      expect(queue.empty?).to eq(true)
+    end
+
+    it 'should have the correct length' do
+      expect(queue.length).to eq(7)
+    end
+
+
+
+
+  end
+
+
   context "add a new item to the queue" do
 
     let(:new_node){Node.new("new")}
@@ -90,7 +131,7 @@ describe "OrderedTree" do
   end
 
   context "add a new item to the tree" do
-      
+
   end
 
 
