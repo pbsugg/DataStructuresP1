@@ -32,8 +32,13 @@ class OrderedTree
 
 
   # level-order (breadth-first) write to tree
-  # take a queue to write
-  # pop the first element, make it the root
+
+  # gonna need two queues here
+    # one for the parent node(s)
+    # one for all the children at the current level
+    # keep writing to those child nodes until you run out of spaces
+    # make those child nodes the parent nodes for the next level
+
   def write_queue_to_tree(queue)
     aux_holding_queue = QueueLinkedList.new
     queue_element = queue.dequeue
